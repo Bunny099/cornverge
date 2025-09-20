@@ -1,11 +1,98 @@
-
-
 generator client {
   provider = "prisma-client-js"
-
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  accounts       Account[]
+  integrations   Integration[]
+  emails         Email[]
+  jiraIssues     JiraIssue[]
+  notionPages    NotionPage[]
+  calenderEvents CalenderEvent[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  user              User    @relation(fields: [userId], references: [id])
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+}
+
+model Integration {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  type          String
+  access_token  String?   @db.Text
+  refresh_token String?   @db.Text
+  expiresAt     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Email {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  subject    String
+  sender     String
+  receviedAt DateTime
+  body       String?  @db.Text
+  vectorId   String?
+}
+
+model JiraIssue {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  issueKey  String
+  title     String
+  status    String
+  priority  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  vectorId  String?
+}
+
+model NotionPage {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  notionId   String
+  title      String
+  content    String?  @db.Text
+  lastEdited DateTime
+  vectorId   String?
+}
+
+model CalenderEvent {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  eventId     String
+  title       String
+  description String?  @db.Text
+  startTime   DateTime
+  endTime     DateTime
+  vectorId    String?
 }
