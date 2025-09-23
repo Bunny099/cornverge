@@ -1,44 +1,17 @@
 -- CreateTable
 CREATE TABLE "public"."User" (
     "id" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
     "name" TEXT,
-    "password" TEXT,
+    "email" TEXT,
+    "image" TEXT,
+    "providerId" TEXT,
+    "accessToken" TEXT,
+    "refreshToken" TEXT,
+    "expiresAt" BIGINT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "public"."Account" (
-    "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-    "provider" TEXT NOT NULL,
-    "providerAccountId" TEXT NOT NULL,
-    "refresh_token" TEXT,
-    "access_token" TEXT,
-    "expires_at" INTEGER,
-    "token_type" TEXT,
-    "scope" TEXT,
-    "id_token" TEXT,
-    "session_state" TEXT,
-
-    CONSTRAINT "Account_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "public"."Integration" (
-    "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-    "type" TEXT NOT NULL,
-    "access_token" TEXT,
-    "refresh_token" TEXT,
-    "expiresAt" TIMESTAMP(3),
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "Integration_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -47,7 +20,7 @@ CREATE TABLE "public"."Email" (
     "userId" TEXT NOT NULL,
     "subject" TEXT NOT NULL,
     "sender" TEXT NOT NULL,
-    "receviedAt" TIMESTAMP(3) NOT NULL,
+    "receivedAt" TIMESTAMP(3) NOT NULL,
     "body" TEXT,
     "vectorId" TEXT,
 
@@ -60,7 +33,6 @@ CREATE TABLE "public"."JiraIssue" (
     "userId" TEXT NOT NULL,
     "issueKey" TEXT NOT NULL,
     "title" TEXT NOT NULL,
-    "status" TEXT NOT NULL,
     "priority" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -99,11 +71,8 @@ CREATE TABLE "public"."CalenderEvent" (
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "public"."User"("email");
 
--- AddForeignKey
-ALTER TABLE "public"."Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "public"."Integration" ADD CONSTRAINT "Integration_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+-- CreateIndex
+CREATE UNIQUE INDEX "User_providerId_key" ON "public"."User"("providerId");
 
 -- AddForeignKey
 ALTER TABLE "public"."Email" ADD CONSTRAINT "Email_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
