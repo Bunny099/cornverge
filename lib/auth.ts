@@ -6,7 +6,7 @@ import { refreshAccessToken, upsertGoogleUser } from "./utils";
 export const authOptions: AuthOptions = {
     providers: [
         GoogleProvider({
-            clientId: process.env.GOOGlE_CLIENT_ID as string,
+            clientId: process.env.GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
             authorization: {
                 params: {
@@ -43,7 +43,7 @@ export const authOptions: AuthOptions = {
                             }
                         })
                         await prisma.user.update({
-                            where: { id: token.userid as string },
+                            where: { id: token.userId as string },
                             data: {
                                 accessToken: refreshed.access_token, expiresAt: token.expiresAt as number
                             }
