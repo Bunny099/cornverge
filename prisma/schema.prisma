@@ -14,16 +14,17 @@ model User {
   image      String?
   providerId String? @unique
 
-  accessToken    String?
-  refreshToken   String?
-  expiresAt      BigInt?
-  emails         Email[]
-  jiraIssues     JiraIssue[]
-  notionPages    NotionPage[]
-  calenderEvents CalenderEvent[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  accessToken      String?
+  refreshToken     String?
+  expiresAt        BigInt?
+  emails           Email[]
+  jiraIssues       JiraIssue[]
+  notionPages      NotionPage[]
+  calenderEvents   CalenderEvent[]
+  notionItegration NotionIntegration[]
+  notionDatabase   NotionDatabase[]
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
 }
 
 model Email {
@@ -46,7 +47,7 @@ model JiraIssue {
   priority  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  vectorId String?
+  vectorId  String?
 }
 
 model NotionPage {
@@ -70,4 +71,32 @@ model CalenderEvent {
   startTime   DateTime
   endTime     DateTime
   vectorId    String?
+}
+
+model NotionIntegration {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  user          User     @relation(fields: [userId], references: [id])
+  accessToken   String
+  refreshToken  String
+  workspaceId   String
+  workspaceName String
+  workspaceIcon String?
+  botId         String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model NotionDatabase {
+  id         String   @id @default(cuid())
+  userId     String   @unique
+  user       User     @relation(fields: [userId], references: [id])
+  databaseId String   @unique
+  title      String
+  url        String
+  iconUrl    String?
+  coverUrl   String?
+  properties Json?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
