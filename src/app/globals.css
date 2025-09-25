@@ -114,7 +114,7 @@
 
 @layer base {
   body{
-    font-family: var(--font-inter);
+    font-family: var(--font-lora);
   }
   * {
     @apply border-border outline-ring/50;
@@ -123,4 +123,18 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes wave {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); } 
+}
+
+.animate-wave {
+  animation: wave 1.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+
+
+
 
