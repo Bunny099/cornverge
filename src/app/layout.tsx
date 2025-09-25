@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Montserrat, Lora, Caveat } from "next/font/google";
 import "./globals.css";
 
 
+const lora = Lora({
+  variable: "--font-lora",
+  subsets: ["cyrillic", "latin"]
 
-const inter = Montserrat({
-  variable:"--font-inter",
-  subsets:["latin"]
 })
+
 export const metadata: Metadata = {
   title: "Cornverge",
-  description: "Cornverge",
+  description: "Cornverge-Brings all your tools together.",
 };
 
 export default function RootLayout({
@@ -21,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={` ${inter.variable} antialiased`}
+        className={`  ${lora.variable}  antialiased`}
       >
         {children}
       </body>
