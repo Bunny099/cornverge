@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Montserrat, Lora, Caveat } from "next/font/google";
+import {  Lora,} from "next/font/google";
 import "./globals.css";
-
+import { ThemeProvider } from "@/components/layout/theme-provider"
 
 const lora = Lora({
   variable: "--font-lora",
@@ -20,11 +20,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`  ${lora.variable}  antialiased`}
       >
-        {children}
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
       </body>
     </html>
   );
