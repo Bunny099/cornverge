@@ -1,11 +1,18 @@
 "use client"
+
 import { signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
-export default function LogoutButton(){
-const router = useRouter()
-    async function logOutFun(){
-        await signOut({redirect:false})
-        router.push("/")
-    }
-    return <div onClick={logOutFun} className="px-4 py-1 rounded-md cursor-pointer bg-red-700 text-white">Logout</div>
+import { LogOut } from "lucide-react"
+import { SidebarMenuButton } from "@/components/ui/sidebar"
+export default function LogoutButton({ showText = true }: { showText?: boolean }) {
+  const router = useRouter()
+
+  async function handleLogout() {
+    await signOut({ redirect: false })
+    router.push("/")
+  }
+
+  return (<SidebarMenuButton className="bg-red-600 text-primary-foreground " onClick={handleLogout}> <LogOut className="w-4 h-4 " /> <span>Logout</span> </SidebarMenuButton>
+
+  )
 }
