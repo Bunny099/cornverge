@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import {  Lora,} from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/layout/theme-provider"
 
+const lora = Lora({
+  variable: "--font-lora",
+  subsets: ["cyrillic", "latin"]
 
-
-const inter = Montserrat({
-  variable:"--font-inter",
-  subsets:["latin"]
 })
+
 export const metadata: Metadata = {
   title: "Cornverge",
-  description: "Cornverge",
+  description: "Cornverge-Brings all your tools together.",
 };
 
 export default function RootLayout({
@@ -19,11 +20,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={` ${inter.variable} antialiased`}
+        className={`  ${lora.variable}  antialiased`}
       >
-        {children}
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
       </body>
     </html>
   );

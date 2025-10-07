@@ -1,13 +1,22 @@
-import { Button } from "../ui/button"
-import Link from "next/link"
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { ModeToggle } from "./toggle";
+
 export default function Navbar() {
-    return <nav className=" border-b border-purple-800 flex items-center justify-between px-4 py-3 w-full">
-        <div className="flex items-center text-3xl text-purple-600 font-semibold">    
-           <h1>Cornverge</h1>
-        </div>
-        
-        <Button variant={"ghost"} className="bg-purple-700 hover:bg-purple-800 text-white text-lg hover:text-white cursor-pointer">
-            <Link href={"/auth/login"}>Start</Link>
+  return (
+    <nav className="sticky top-0 z-50 flex items-center justify-between px-3 md:px-12 py-4 backdrop-blur-sm bg-card/70 shadow-md transition-colors duration-300">
+      <div className="text-2xl font-extrabold tracking-wide text-foreground">
+        <span className="text-primary">CORNVERGE</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <ModeToggle />
+      <Link href="/auth/login">
+        <Button className=" px-5 py-2 rounded-full hidden md:block transition-all duration-300 shadow-md cursor-pointer">
+          START
         </Button>
+      </Link>
+      </div>
+      
     </nav>
+  );
 }

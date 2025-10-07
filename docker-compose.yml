@@ -1,0 +1,19 @@
+
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15       # Latest stable Postgres
+    container_name: cornverge_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: cornuser
+      POSTGRES_PASSWORD: cornpass
+      POSTGRES_DB: corndb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
